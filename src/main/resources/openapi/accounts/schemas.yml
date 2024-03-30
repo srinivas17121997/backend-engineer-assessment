@@ -1,5 +1,9 @@
 components:
   schemas:
+    providerType:
+      type: string
+      enum:
+        - stripe
     createAccount:
       type: object
       properties:
@@ -18,6 +22,11 @@ components:
           description: "Email of user"
           example: "john@doe.com"
           required: true
+        providerType:
+          type: enum
+          $ref: "#/components/schemas/providerType"
+
+
     account:
       type: object
       properties:
@@ -51,6 +60,13 @@ components:
           description: "Prospect last updated time"
           readOnly: true
           example: "2022-04-13T01:52:40.690387Z"
+        providerType:
+          type: enum
+          $ref: "#/components/schemas/providerType"
+        providerId:
+          type: string
+          description: "provider id"
+
       example:
         - id: usr_fba5b240-0e68-4e64-aca6-f12022dc4be3
           firstName: "John"

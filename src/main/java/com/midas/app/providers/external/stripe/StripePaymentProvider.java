@@ -1,8 +1,12 @@
 package com.midas.app.providers.external.stripe;
 
-import com.midas.app.models.Account;
 import com.midas.app.providers.payment.CreateAccount;
 import com.midas.app.providers.payment.PaymentProvider;
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.Customer;
+import com.stripe.param.CustomerCreateParams;
+import java.util.Map;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -30,7 +34,21 @@ public class StripePaymentProvider implements PaymentProvider {
    * @return Account
    */
   @Override
-  public Account createAccount(CreateAccount details) {
-    throw new UnsupportedOperationException("Not implemented");
+  public String createAccount(CreateAccount details) {
+    Stripe.apiKey = configuration.getApiKey();
+
+    try {
+      CustomerCreateParams params =
+          CustomerCreateParams.builder()
+              .setName(details.getFirstName() + " " + details.getLastName())
+              .setEmail(details.getEmail())
+              .setMetadata(Map.of("userId", details.getUserId()))
+              .build();
+      Customer customer = Customer.create(params);
+      logger.info(customer.toJson());
+      return customer.getId();
+    } catch (StripeException e) {
+      throw new RuntimeException(e);
+    }
   }
 }

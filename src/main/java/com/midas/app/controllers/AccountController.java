@@ -37,6 +37,24 @@ public class AccountController implements AccountsApi {
                 .firstName(createAccountDto.getFirstName())
                 .lastName(createAccountDto.getLastName())
                 .email(createAccountDto.getEmail())
+                .providerType(createAccountDto.getProviderType())
+                .build());
+
+    return new ResponseEntity<>(Mapper.toAccountDto(account), HttpStatus.CREATED);
+  }
+
+  @Override
+  public ResponseEntity<AccountDto> updateUserAccount(
+      String accountId, CreateAccountDto createAccountDto) {
+    logger.info("Creating account for user with email: {}", createAccountDto.getEmail());
+
+    var account =
+        accountService.updateAccount(
+            accountId,
+            Account.builder()
+                .firstName(createAccountDto.getFirstName())
+                .lastName(createAccountDto.getLastName())
+                .email(createAccountDto.getEmail())
                 .build());
 
     return new ResponseEntity<>(Mapper.toAccountDto(account), HttpStatus.CREATED);

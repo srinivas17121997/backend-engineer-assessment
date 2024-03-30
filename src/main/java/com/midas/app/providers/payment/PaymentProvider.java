@@ -1,7 +1,5 @@
 package com.midas.app.providers.payment;
 
-import com.midas.app.models.Account;
-
 public interface PaymentProvider {
   /** providerName is the name of the payment provider */
   String providerName();
@@ -12,5 +10,5 @@ public interface PaymentProvider {
    * @param details is the details of the account to be created.
    * @return Account
    */
-  Account createAccount(CreateAccount details);
+  String createAccount(CreateAccount details);
 }

@@ -23,8 +23,9 @@ public class Mapper {
         .lastName(account.getLastName())
         .email(account.getEmail())
         .createdAt(account.getCreatedAt())
+        .providerId(account.getProviderId())
+        .providerType(account.getProviderType())
         .updatedAt(account.getUpdatedAt());
-
     return accountDto;
   }
 }

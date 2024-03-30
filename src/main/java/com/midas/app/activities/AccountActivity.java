@@ -15,6 +15,9 @@ public interface AccountActivity {
   @ActivityMethod
   Account saveAccount(Account account);
 
+  @ActivityMethod
+  Account updateAccount(String accountId, Account account);
+
   /**
    * createPaymentAccount creates a payment account in the system or provider.
    *
